@@ -329,6 +329,15 @@ extension DSFQuickActionBar.Window: NSTextFieldDelegate {
 	}
 
 	func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if let event = self.currentEvent, event.modifierFlags.contains(.control) {
+            if event.keyCode == 38 { // 'j'
+                return self.results.selectNextSelectableRow()
+            }
+            if event.keyCode == 40 { // 'k'
+                return self.results.selectPreviousSelectableRow()
+            }
+        }
+
 		if commandSelector == #selector(moveDown(_:)) {
 			return self.results.selectNextSelectableRow()
 		}
