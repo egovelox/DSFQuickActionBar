@@ -64,6 +64,8 @@ public protocol DSFQuickActionBarContentSource: NSObjectProtocol {
 
 	/// Called when the specified item is activated (double clicked, return key pressed while selected etc)
 	func quickActionBar(_ quickActionBar: DSFQuickActionBar, didActivateItem item: AnyHashable)
+    
+    func quickActionBar(_ quickActionBar: DSFQuickActionBar, didActivate2Item item: AnyHashable)
 
 	/// Called when the quick action bar was dismissed without selecting an item (optional)
 	func quickActionBarDidCancel(_ quickActionBar: DSFQuickActionBar)

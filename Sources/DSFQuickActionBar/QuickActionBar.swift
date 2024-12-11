@@ -237,6 +237,20 @@ public extension QuickActionBar {
 			// Tell the window to go away
 			self.isVisible = false
 		}
+        
+        public func quickActionBar(
+            _ quickActionBar: DSFQuickActionBar,
+            didActivate2Item item: AnyHashable
+        ) {
+            // Update the selection
+            self.selectedItem = item as? IdentifierType
+
+            // Reflect the term that was searched for
+            self.currentSearchText = quickActionBar.currentSearchText ?? ""
+
+            // Tell the window to go away
+            self.isVisible = false
+        }
 
 		public func quickActionBar(_ quickActionBar: DSFQuickActionBar, canSelectItem item: AnyHashable) -> Bool {
 			guard let item = item as? IdentifierType else { fatalError() }

@@ -280,27 +280,17 @@ extension DSFQuickActionBar.ResultsView {
 		self.rowAction()
 	}
 
-	func performShortcutAction(for itemIndex: Int) -> Bool {
-		// Shortcut key is must be between 0 (the initial row) and 1...9
-		guard itemIndex >= 0, itemIndex <= 9 else {
-			return false
-		}
+	func performShortcutAction() {
+        let selectedRow = self.tableView.selectedRow
+        if selectedRow < 0 || selectedRow >= self.identifiers.count {
+            return
+        }
 
-		// Find the identifier for the shortcut
-		guard let which = self.shortcutKeyboardMap.first(where: { $0.value == itemIndex }) else {
-			return false
-		}
-
-		// Mark that the user activated an item in the list
-		self.quickActionBarWindow?.userDidActivateItem = true
-
-		// Tell the delegate that the user selected an item
-		self.quickActionBar.contentSource?.quickActionBar(self.quickActionBar, didActivateItem: which.key)
-
-		// Close the bar
-		self.window?.resignMain()
-
-		return true
+        // Mark that the user has activated an item in the list
+        // self.quickActionBarWindow?.userDidActivateItem = true
+        
+        let itemIdentifier = self.identifiers[selectedRow]
+		self.quickActionBar.contentSource?.quickActionBar(self.quickActionBar, didActivate2Item: itemIdentifier)
 	}
 
 	func rowAction() {
@@ -400,16 +390,10 @@ extension DSFQuickActionBar {
 			else if event.keyCode == 0x7B { // kVK_LeftArrow
 				parent.backAction()
 			}
-			else if event.modifierFlags.contains(.command),
-					  let c = event.characters,
-					  let v = Int(c)
+			else if event.modifierFlags.contains(.control),
+                    event.keyCode == 37 // l
 			{
-				if parent.performShortcutAction(for: v) {
-					return
-				}
-				else {
-					super.keyDown(with: event)
-				}
+				parent.performShortcutAction()
 			}
 			else {
 				super.keyDown(with: event)

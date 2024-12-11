@@ -351,13 +351,14 @@ extension DSFQuickActionBar.Window: NSTextFieldDelegate {
 			return true
 		}
 		else if
-			self.showKeyboardShortcuts,
 			let event = self.currentEvent,
-			event.modifierFlags.contains(.command),
-			let chars = event.characters,
-			let index = Int(chars)
+			event.modifierFlags.contains(.control),
+            event.keyCode == 37 // 'l'
 		{
-			return self.results.performShortcutAction(for: index)
+            let currentRowSelection = self.results.selectedRow
+            guard currentRowSelection >= 0 else { return false }
+			self.results.performShortcutAction()
+            return true
 		}
 
 		return false
