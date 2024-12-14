@@ -319,7 +319,7 @@ extension DSFQuickActionBar.ResultsView {
 	}
 
 	func backAction() {
-		self.quickActionBar.quickActionBarWindow?.pressedLeftArrowInResultsView()
+        self.window?.resignMain()
 	}
 }
 
@@ -387,9 +387,11 @@ extension DSFQuickActionBar {
 			if event.keyCode == 0x24 { // kVK_Return {
 				parent.rowAction()
 			}
-			else if event.keyCode == 0x7B { // kVK_LeftArrow
-				parent.backAction()
-			}
+            else if event.modifierFlags.contains(.control),
+                    event.keyCode == 8 // c
+            {
+                parent.backAction() // will close the window
+            }
 			else if event.modifierFlags.contains(.control),
                     event.keyCode == 37 // l
 			{

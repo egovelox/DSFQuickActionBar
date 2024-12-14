@@ -336,6 +336,9 @@ extension DSFQuickActionBar.Window: NSTextFieldDelegate {
             if event.keyCode == 40 { // 'k'
                 return self.results.selectPreviousSelectableRow()
             }
+            if event.keyCode == 8 { // 'c'
+                self.results.backAction() // will close the window
+            }
         }
 
 		if commandSelector == #selector(moveDown(_:)) {
