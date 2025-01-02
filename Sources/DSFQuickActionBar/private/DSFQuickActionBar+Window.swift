@@ -360,6 +360,7 @@ extension DSFQuickActionBar.Window: NSTextFieldDelegate {
 		{
             let currentRowSelection = self.results.selectedRow
             guard currentRowSelection >= 0 else { return false }
+            // close a tab, mark the item as deleted, and redraw list
 			self.results.performShortcutAction()
             return true
 		}

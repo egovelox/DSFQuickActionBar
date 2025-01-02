@@ -290,7 +290,15 @@ extension DSFQuickActionBar.ResultsView {
         // self.quickActionBarWindow?.userDidActivateItem = true
         
         let itemIdentifier = self.identifiers[selectedRow]
-		self.quickActionBar.contentSource?.quickActionBar(self.quickActionBar, didActivate2Item: itemIdentifier)
+        // action ( close tab + mark item as deleted )
+        self.quickActionBar.contentSource?.quickActionBar(self.quickActionBar, didActivate2Item: itemIdentifier)
+        // reconfigure view for deleted item
+        self.quickActionBar.contentSource?.quickActionBar(self.quickActionBar, viewForItem: itemIdentifier, searchTerm: "")
+        // reload UI
+        self.tableView.reloadData()
+        // select next row
+        self.tableView.selectRowIndexes(IndexSet(integer: selectedRow + 1), byExtendingSelection: false)
+
 	}
 
 	func rowAction() {
